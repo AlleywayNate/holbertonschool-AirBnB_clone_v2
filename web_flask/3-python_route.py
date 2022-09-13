@@ -24,5 +24,12 @@ def hbnb_2(text):
     return("C {}".format(text.replace("_", " ")))
 
 
+@app.route('/python/', strict_slashes=False, defaults={'text': 'is cool'})
+@app.route('/python/<text>', strict_slashes=False)
+def hbnb_3(text):
+    """ Function that displays "Python" followed by the value of the text"""
+    return("Python {}".format(text.replace("_", " ")))
+
+
 if __name__ == '__main__':
     app.run(host="0.0.0.0", port=5000, debug=None)
