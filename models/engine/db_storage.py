@@ -46,14 +46,14 @@ class DBStorage:
             for className in classDict:
                 data = self.__session.query(classDict[className]).all()
                 for obj in data:
-                    objects[f"{obj.__class__.__name__}.{obj.id}"] = obj
+                    objects["{}.{}".format(obj.__class__.__name__,obj.id)] = obj
 
         else:
             if isinstance(cls, str):
                 cls = classDict[cls]
             data = self.__session.query(cls).all()
             for obj in data:
-                objects[f"{obj.id}"] = obj
+                objects["{}".format(obj.id)] = obj
         return objects
 
     def new(self, obj):
