@@ -13,7 +13,7 @@ db = getenv('HBNB_MYSQL_DB')
 host = getenv('HBNB_MYSQL_HOST')
 v_env = getenv('HBNB_ENV')
 
-URI = f"mysql+mysqldb://{username}:{password}@{host}/{db}"
+URI = "mysql+mysqldb://{}:{}@{}/{}".format(username,password,host,db)
 
 
 class DBStorage:
