@@ -15,8 +15,8 @@ class State(BaseModel, Base):
     cities = relationship(
         "City",
         backref='state',
-        cascade="all, delete",
-        passive_deletes=True)
+        cascade="all, delete"
+        """passive_deletes=True""")
 
     if getenv("HBNB_TYPE_STORAGE") != "db":
         @property
