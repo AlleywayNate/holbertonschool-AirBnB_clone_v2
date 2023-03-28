@@ -3,33 +3,36 @@
 Script that starts a Flask web application listening on 0.0.0.0:5000
 Use storage for fetching data from the storage engine File or DB storage
 from models import storage and storage.all(...)
+To load all cities of a State:
+    If storage engine is DBStorage, use cities relationsship
+    Otherwise, use the public getter method cities
 After each request, remove current SQLAlchemy Session:
     Declare method to handle @app.teardown_appcontext
     Call in this method: storage.close()
-Route /cities_by_states: display a HTML page
-    H1 tag: "States"
-    UL tag: list of all State objects present in DBStorage sorted by name
-        LI tag: Description of one State: <state.id>: <<B><state.name></B>
-        UL tag: list of City objects linked to the State, sorted by name
-            LI tag: description of one City: <city.id>L <B><city.name></B>
+Route /hbnb: display a HTML page like 8-index.html from web-static
 Must use option strict_slashes=False
 """
 from flask import Flask, render_template
 from models import storage
 from models.state import State
+from models.amenity import Amenity
+from models.place import Place
 
 
 app = Flask(__name__)
 app.url_map.strict_slashes = False
 
 
-@app.route("/cities_by_states")
-def city_by_list():
+@app.route("/hbnb")
+def hbnb_filters():
     """
-    Displays an HTML formatted list of cities in states from DBStorage
+    Displays a nearly complete HBNB HTML page
     """
     states = storage.all(State)
-    return render_template("8-cities_by_states.html", state_list=states)
+    amenities = storage.all(Amenity)
+    places = storage.all(Place)
+    return render_template("100-hbnb.html", state_list=states,
+                           amenity_list=amenities, place_list=places)
 
 
 @app.teardown_appcontext
